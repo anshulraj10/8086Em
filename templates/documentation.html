@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <title>Documentation</title>
+    </head>
+    <body>
+        <h1>8086 Emulator Documentation</h1>
+        <br>
+        <h3>Supported Instructions</h3>
+        <p>
+            MOV - Used to copy the byte or word from the provided source to the provided destination.<br>
+            PUSH - Used to put a word at the top of the stack.<br>
+            POP - Used to get a word from the top of the stack to the provided location.<br>
+            XCHG - Used to exchange the data from two locations.<br>
+            ADD - Used to add the provided byte to byte/word to word.<br>
+            SUB - Used to subtract the byte from byte/word from word.<br>
+            CMP - Used to compare 2 provided byte/word.<br>
+            INC - Used to increment the provided byte/word by 1.<br>
+            DEC - Used to decrement the provided byte/word by 1.<br>
+            MUL - Used to multiply unsigned byte by byte/word by word.<br>
+            DIV - Used to divide the unsigned word by byte or unsigned double word by word.<br>
+            NOT - Used to invert each bit of a byte or word.<br>
+            OR - Used to multiply each bit in a byte/word with the corresponding bit in another byte/word.<br>
+            AND - Used for adding each bit in a byte/word with the corresponding bit in another byte/word.<br>
+            XOR - Used to perform Exclusive-OR operation over each bit in a byte/word with the corresponding bit in another byte/word.<br>
+            JUMP - Used to jump to the provided address to proceed to the next instruction.<br>
+            JC - Used to jump if carry flag CF = 1<br>
+            JNC - Used to jump if no carry flag (CF = 0)<br>
+            JZ - Used to jump if zero flag ZF = 1<br>
+            JNZ - Used to jump if not zero flag ZF = 0<br>
+            JS - Used to jump if sign flag SF = 1<br>
+            JNS - Used to jump if no sign flag SF = 0<br>
+            STC - Used to set carry flag CF to 1<br>
+            CLC - Used to clear/reset carry flag CF to 0<br>
+        </p>
+        <h3>Supported Addressing Modes</h3>
+        <p>
+            Immediate Addressing Mode - Data operand is part of the instruction itself<br>
+            Register Addressing Mode - Register is the source of an operand.<br>
+        </p>
+        <h3>Supported Flags</h3>
+        <p>
+            Sign flag<br>
+            Zero flag<br>
+            Carry flag<br>
+        </p>
+        <h3>Addition to conventional instructions</h3>
+        <p>
+            ADD - Can be used with three operands.<br>
+            E.g. add ax, 4f, 5c -> ax = ax + 4f + 5c<br><br>
+            SUB - Can be used with three operands.<br>
+            E.g. add ax, 2b, 32 -> ax = ax - 2b - 32<br><br>
+            MUL - Can be used with two operands.<br>
+            E.g. add bx, 18 -> ax = ax * bx * 18<br><br>
+        </p>
+        <p><a href="\">Go to Home!</a></p>
+    </body>
+</html>

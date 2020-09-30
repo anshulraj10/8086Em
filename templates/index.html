@@ -1,0 +1,218 @@
+<html>
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <title>8086 Emulator</title>
+
+      <link rel = "icon" href = "img/logo.png" type = "image/x-icon">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <style>
+        body {
+            background-color: #fbfbfd;
+            margin: 0;
+        }
+        .header {
+            background-color: #343642;
+            margin-top: 0;
+        }
+        .header-text {
+            font-family: "PT Sans", sans-serif;
+            color: #fbfbfd;
+            text-align: center;
+            font-size: 60px;
+        }
+        .col-1 {
+            position: absolute;
+            top: 15%;
+            left: 2.5%;
+            height: 80%;
+            width: 45%;
+            background-color: #e6e6e6;
+            padding: 3px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        }
+        .col-2 {
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            height: 80%;
+            width: 45%;
+            background-color: #e6e6e6;
+            padding: 3px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        }
+        .code-form {
+            margin: 2px;
+        }
+        input.full-width {
+            width: 100%;
+        }
+        input.has-padding {
+            padding: 12px 20px 12px 50px;
+        }
+        input.has-border {
+            border: 1px solid #d2d8d8;
+            border-radius: 4px;
+        }
+        .btn-green {
+            background-color: green;
+        }
+        .btn-red {
+            background-color: red;
+        }
+        .btn {
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 4px;
+            margin-left: 2px;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+        .half-width {
+            width: 49%;
+        }
+        #code {
+            overflow: auto;
+        }
+        .docs {
+          position: absolute;
+          margin-top: auto;
+          bottom: 1%;
+          left: 33%;
+        }
+        .reset {
+          position: absolute;
+          margin-top: auto;
+          bottom: 1%;
+          left: 66%;
+        }
+        table {
+          width: 100%;
+        }
+        th {
+          background: #f1f1f1;
+          font-weight: bold;
+          padding: 6px;
+        }
+        td {
+          background: #f9f9f9;
+          padding: 6px;
+        }
+        .label-col {
+          text-align: right;
+          width: 20%;
+        }
+      </style>
+    </head>
+    <div class = "header">
+        <p class = "header-text">8086 Emulator</p>
+    </div>
+
+    <body>
+        <div class = "col-1">
+            <div class = "code-form">
+            <form class="enter-code">
+                <input name="line" class="full-width has-padding has-border" id="line" type="text" placeholder="Enter code here">
+                <button name="enter" id="enter" class = "half-width btn btn-green" type="button">Enter!</button>
+                <button name="halt" id="halt" class = "half-width btn btn-red" type="button">Halt!</button>
+            </form>
+            </div>
+            <div id="code">
+              <table id="codeTable">
+                <colgroup>
+                  <col span="1" class="label-col">
+                  <col class="code-col">
+                </colgroup>
+              </table>
+            </div>
+        </div>
+        <div class = "col-2">
+          <div id="results">
+            <table id="resultTable">
+              <colgroup>
+                <col span="1" class="label-col">
+                <col class="code-col">
+              </colgroup>
+            </table>
+          </div>
+        </div>
+        <div class="docs"><a href="documentation">Documentation</a></div>
+        <div class="reset"><button name="reset" id="reset" class="btn-red btn" onclick="reloadPage();">Reset</button></div>
+    </body>
+    <script>
+      // Function for getting user value and displaying it in a table
+      $(function() {
+        $('#line').keypress(function(e){
+          if(e.keyCode == 13) {
+            e.preventDefault();
+            $("#enter").click();
+          }
+        });
+        $('#enter').click(function(){
+          var line = $('#line').val();
+          if(line != "") {
+            $.ajax({
+              url: '/enter?line=' + line,
+              dataType: 'json',
+              success: function(data){
+                $("#codeTable").empty();
+                var head = $('<tr><th>Label</th><th>Code</th></tr>');
+                $('#codeTable').append(head);
+                for (var i=0; i<data.length; i++) {
+                  var row = $('<tr><td>' + data[i].label+ '</td><td>' + data[i].code + '</td></tr>');
+                  $('#codeTable').append(row);
+                }
+                $('#line').val('');
+              },
+              error: function(error) {
+                alert('Something went wrong!\nPlease try again!')
+              }
+            });
+          }
+          else {
+            alert('Please enter a line!')
+          }
+        });
+      });
+
+      // Function to execute the code
+      $(function() {
+        $('#line').keypress(function(e){
+          if(e.keyCode == 13) {
+            e.preventDefault();
+          }
+        });
+        $('#halt').click(function() {
+          $.ajax({
+            url: '/halt',
+            dataType: 'json',
+            success: function(data){
+              $("#resultTable").empty();
+              var head = $('<tr><th>Register/Flag</th><th>Value</th></tr>');
+              $('#resultTable').append(head);
+              for (var i=0; i<data.length; i++) {
+                var row = $('<tr><td>' + data[i].label+ '</td><td>' + data[i].value + '</td></tr>');
+                $('#resultTable').append(row);
+              }
+              $('#line').val('');
+            },
+            error: function(error) {
+              alert('Something went wrong!\nPlease try again!')
+            }
+          });
+        });
+      });
+
+      // Function for reloading page
+      function reloadPage(){
+        window.location.href = "reset";
+      }
+    </script>
+</html>
