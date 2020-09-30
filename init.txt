@@ -1,0 +1,2 @@
+cd C:\Users\araj1\Documents\Python\8086Em\
+conda activate flaskEnv

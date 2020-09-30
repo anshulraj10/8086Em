@@ -1,0 +1,60 @@
+### List of supported instructions ###
+
+MOV - Used to copy the byte or word from the provided source to the provided destination.
+PUSH - Used to put a word at the top of the stack.
+POP - Used to get a word from the top of the stack to the provided location.
+XCHG - Used to exchange the data from two locations.
+ADD - Used to add the provided byte to byte/word to word.
+SUB - Used to subtract the byte from byte/word from word.
+CMP - Used to compare 2 provided byte/word.
+INC - Used to increment the provided byte/word by 1.
+DEC - Used to decrement the provided byte/word by 1.
+MUL - Used to multiply unsigned byte by byte/word by word.
+DIV - Used to divide the unsigned word by byte or unsigned double word by word.
+NOT - Used to invert each bit of a byte or word.
+OR - Used to multiply each bit in a byte/word with the corresponding bit in another byte/word.
+AND - Used for adding each bit in a byte/word with the corresponding bit in another byte/word.
+XOR - Used to perform Exclusive-OR operation over each bit in a byte/word with the corresponding bit in another byte/word.
+JUMP - Used to jump to the provided address to proceed to the next instruction.
+JC - Used to jump if carry flag CF = 1
+JNC - Used to jump if no carry flag (CF = 0)
+JZ - Used to jump if zero flag ZF = 1
+JNZ - Used to jump if not zero flag ZF = 0
+JS - Used to jump if sign flag SF = 1
+JNS - Used to jump if no sign flag SF = 0
+STC - Used to set carry flag CF to 1
+CLC - Used to clear/reset carry flag CF to 0
+
+
+### List of supported addressing modes ###
+
+Immediate Addressing Mode - Data operand is part of the instruction itself
+Register Addressing Mode - Register is the source of an operand.
+
+
+### List of implemented flags ###
+
+Sign flag
+Zero flag
+Carry flag
+
+### List of tools Used ###
+-> Atom Text Editor
+-> Anaconda Python 3.7 Installation
+-> Flask
+-> Amazon Web Serives EC2 instance(free tier)
+
+### Requirements for development ###
+-> The project is developed in Windows 10 Home OS
+-> Python 3.7 is appreciated but python >=3.0 is reqiured
+-> Flask must be installed
+-> Any text editor
+-> A web browser for testing
+
+### Requirements for deployement ###
+-> AWS account
+-> EC2 instance
+-> apache web server: sudo apt-get install apache2
+-> mod_wsgi: sudo apt-get install libapache2-mod-wsgi
+-> python-pip: sudo apt-get install python3-pip
+-> flask: sudo apt-get install python3-flask
